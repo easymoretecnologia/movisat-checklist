@@ -1,0 +1,12 @@
+@import 'tailwindcss/utilities';
+
+@media screen and (min-width: 768px) {
+    .swal2-50 {
+        width: 50%;
+    }
+}
+
+div:where(.swal2-container) div:where(.swal2-popup).swal2-dark {
+	background: theme('colors.black-haze.950') !important;
+	color: theme('colors.black-haze.400') !important;
+}
