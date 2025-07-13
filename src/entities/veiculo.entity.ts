@@ -6,7 +6,7 @@ export class Veiculo {
     id: number
 
     @Column({ type: 'bigint', unsigned: true, nullable: true })
-    id_usuario: number
+    id_usuario: number | null
     
     @Column({ type: 'bigint', unsigned: true })
     id_empresa: number
@@ -24,7 +24,7 @@ export class Veiculo {
     apelido: string
 
     @Column({ type: 'varchar', length: 255, nullable: true })
-    status: string
+    status: string | null
 
     @CreateDateColumn()
     created_at: Date
@@ -35,6 +35,9 @@ export class Veiculo {
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string
     
+    @Column({ type: 'bigint', nullable: true })
+    id_checklist: number | null
+
     @Column({ type: 'varchar', length: 255, nullable: true })
     tipo_checklist: 'diario' | 'semanal' | 'mensal' | null
 }

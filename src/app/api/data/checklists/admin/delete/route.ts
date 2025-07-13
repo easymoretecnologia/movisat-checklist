@@ -4,10 +4,42 @@ import { User } from "@/entities/user.entity"
 import { Veiculo } from "@/entities/veiculo.entity"
 import useDatabase from "@/hooks/useDatabase"
 import useLog from "@/hooks/useLog"
+import { deleteImageFiles, parseImagePaths } from "@/utils/imageHandler"
 import { DateTime } from "luxon"
 import { NextRequest, NextResponse } from "next/server"
 import * as ExcelJS from "exceljs"
 import { stringify } from "csv"
+
+// Helper function to delete images from checklist records
+async function deleteChecklistImages(checklists: (ChecklistDiario | ChecklistMensal | ChecklistSemanal)[]): Promise<void> {
+    for (const checklist of checklists) {
+        const imagesToDelete: string[] = []
+        
+        // Check all possible image fields and collect paths
+        const imageFields = [
+            'farois_images', 'lataria_images', 'vidros_images', 'hodometro_images', 
+            'combustivel_images', 'agua_images', 'luzes_images',
+            // Additional fields for ChecklistMensal
+            'estofados_images', 'documentacao_images', 'volante_images', 'cambio_images', 
+            'higiene_interna_images', 'porta_malas_images', 'bateria_images',
+            // Additional fields for ChecklistSemanal
+            'oleo_motor_images', 'agua_limpador_images', 'oleo_freio_images', 
+            'pneus_images', 'escapamento_images'
+        ]
+        
+        imageFields.forEach(field => {
+            if ((checklist as any)[field]) {
+                const paths = parseImagePaths((checklist as any)[field])
+                imagesToDelete.push(...paths)
+            }
+        })
+        
+        // Delete image files
+        if (imagesToDelete.length > 0) {
+            await deleteImageFiles(imagesToDelete)
+        }
+    }
+}
 
 export async function GET (request: NextRequest) {
     const token = request.headers.get('authorization')?.split(' ')[1]
@@ -63,6 +95,13 @@ export async function GET (request: NextRequest) {
 
             queryDiario = queryDiario.orderBy('checklist_diario.created_at', 'DESC')
 
+            // First, get the records to delete their images
+            const recordsToDelete = await queryDiario.getMany()
+            
+            // Delete associated image files
+            await deleteChecklistImages(recordsToDelete)
+
+            // Now delete the records from database
             await queryDiario.delete()
 
             await db.destroy()
@@ -100,6 +139,13 @@ export async function GET (request: NextRequest) {
 
             queryMensal = queryMensal.orderBy('checklist_mensal.created_at', 'DESC')
 
+            // First, get the records to delete their images
+            const recordsToDelete = await queryMensal.getMany()
+            
+            // Delete associated image files
+            await deleteChecklistImages(recordsToDelete)
+
+            // Now delete the records from database
             await queryMensal.delete()
 
             await db.destroy()
@@ -137,6 +183,13 @@ export async function GET (request: NextRequest) {
 
             querySemanal = querySemanal.orderBy('checklist_semanal.created_at', 'DESC')
 
+            // First, get the records to delete their images
+            const recordsToDelete = await querySemanal.getMany()
+            
+            // Delete associated image files
+            await deleteChecklistImages(recordsToDelete)
+
+            // Now delete the records from database
             await querySemanal.delete()
 
             await db.destroy()

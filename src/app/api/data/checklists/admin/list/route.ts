@@ -6,6 +6,7 @@ import useDatabase from "@/hooks/useDatabase"
 import useLog from "@/hooks/useLog"
 import { DateTime } from "luxon"
 import { NextRequest, NextResponse } from "next/server"
+import { In } from "typeorm"
 
 export async function GET (request: NextRequest) {
     const token = request.headers.get('authorization')?.split(' ')[1]
@@ -20,9 +21,6 @@ export async function GET (request: NextRequest) {
         const repoDiario = db.getRepository(ChecklistDiario)
         const repoMensal = db.getRepository(ChecklistMensal)
         const repoSemanal = db.getRepository(ChecklistSemanal)
-        const repoUser = db.getRepository(User)
-        const repoVeiculo = db.getRepository(Veiculo)
-        const repoEmpresa = db.getRepository(Empresa)
 
         const type: 'diario' | 'mensal' | 'semanal' = querySearch.has('tipo') ? querySearch.get('tipo') as 'diario' | 'mensal' | 'semanal' : 'diario'
         const empresa_id = querySearch.has('empresa_id') ? Number(querySearch.get('empresa_id') ?? 0) : 0
@@ -30,6 +28,8 @@ export async function GET (request: NextRequest) {
         const veiculo_id = querySearch.has('veiculo_id') ? Number(querySearch.get('veiculo_id') ?? 0) : 0
         const inicio = querySearch.has('inicio') ? querySearch.get('inicio') as string : ''
         const fim = querySearch.has('fim') ? querySearch.get('fim') as string : ''
+        const page = Number(querySearch.get('page') || 1)
+        const limit = Number(querySearch.get('limit') || 20)
 
         if (type === 'diario') {
             let queryDiario = repoDiario.createQueryBuilder('checklist_diario')
@@ -39,11 +39,11 @@ export async function GET (request: NextRequest) {
             }
 
             if (usuario_id > 0) {
-                queryDiario = queryDiario.where('checklist_diario.id_usuario = :usuario_id', { usuario_id })
+                queryDiario = queryDiario.andWhere('checklist_diario.id_usuario = :usuario_id', { usuario_id })
             }
 
             if (veiculo_id > 0) {
-                queryDiario = queryDiario.where('checklist_diario.id_veiculo = :veiculo_id', { veiculo_id })
+                queryDiario = queryDiario.andWhere('checklist_diario.id_veiculo = :veiculo_id', { veiculo_id })
             }
 
             if (inicio || fim) {
@@ -60,17 +60,36 @@ export async function GET (request: NextRequest) {
             }
 
             queryDiario = queryDiario.orderBy('checklist_diario.created_at', 'DESC')
+                .addOrderBy('checklist_diario.id', 'DESC')
 
-            const [checklists, total] = await queryDiario.skip((Number(querySearch.get('page') || 1) - 1) * Number(querySearch.get('limit') || 20)).take(Number(querySearch.get('limit') || 20)).getManyAndCount()
+            const [checklists, total] = await queryDiario
+                .skip((page - 1) * limit)
+                .take(limit)
+                .getManyAndCount()
 
-            let items = []
+            // Get unique IDs for bulk queries
+            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
 
-            for (const checklist of checklists) {
-                const user = await repoUser.findOne({ where: { id: checklist.id_usuario } })
-                const veiculo = await repoVeiculo.findOne({ where: { id: checklist.id_veiculo } })
-                const empresa = await repoEmpresa.findOne({ where: { id: checklist.id_empresa } })
+            // Bulk fetch related data
+            const [users, veiculos, empresas] = await Promise.all([
+                userIds.length > 0 ? db.getRepository(User).find({ where: { id: In(userIds) } }) : [],
+                veiculoIds.length > 0 ? db.getRepository(Veiculo).find({ where: { id: In(veiculoIds) } }) : [],
+                empresaIds.length > 0 ? db.getRepository(Empresa).find({ where: { id: In(empresaIds) } }) : []
+            ])
 
-                items.push({
+            // Create lookup maps for O(1) access
+            const userMap = new Map(users.map(u => [u.id, u]))
+            const veiculoMap = new Map(veiculos.map(v => [v.id, v]))
+            const empresaMap = new Map(empresas.map(e => [e.id, e]))
+
+            const items = checklists.map(checklist => {
+                const user = userMap.get(checklist.id_usuario)
+                const veiculo = veiculoMap.get(checklist.id_veiculo)
+                const empresa = empresaMap.get(checklist.id_empresa)
+
+                return {
                     ...checklist,
                     tipo: 'diario',
                     id: Number(checklist.id),
@@ -106,16 +125,16 @@ export async function GET (request: NextRequest) {
                     },
                     created_at: checklist.created_at,
                     updated_at: checklist.updated_at,
-                })
-            }
+                }
+            })
 
             await db.destroy()
 
             return NextResponse.json({
                 items: items,
-                current: Number(querySearch.get('page') || 1),
-                last: Math.ceil(total / Number(querySearch.get('limit') || 20)),
-                per_page: Number(querySearch.get('limit') || 20),
+                current: page,
+                last: Math.ceil(total / limit),
+                per_page: limit,
                 total: total,
             }, { status: 200, statusText: 'OK' })
         } else if (type === 'mensal') {
@@ -126,11 +145,11 @@ export async function GET (request: NextRequest) {
             }
 
             if (usuario_id > 0) {
-                queryMensal = queryMensal.where('checklist_mensal.id_usuario = :usuario_id', { usuario_id })
+                queryMensal = queryMensal.andWhere('checklist_mensal.id_usuario = :usuario_id', { usuario_id })
             }
 
             if (veiculo_id > 0) {
-                queryMensal = queryMensal.where('checklist_mensal.id_veiculo = :veiculo_id', { veiculo_id })
+                queryMensal = queryMensal.andWhere('checklist_mensal.id_veiculo = :veiculo_id', { veiculo_id })
             }
 
             if (inicio || fim) {
@@ -147,17 +166,36 @@ export async function GET (request: NextRequest) {
             }
 
             queryMensal = queryMensal.orderBy('checklist_mensal.created_at', 'DESC')
+                .addOrderBy('checklist_mensal.id', 'DESC')
 
-            const [checklists, total] = await queryMensal.skip((Number(querySearch.get('page') || 1) - 1) * Number(querySearch.get('limit') || 20)).take(Number(querySearch.get('limit') || 20)).getManyAndCount()
+            const [checklists, total] = await queryMensal
+                .skip((page - 1) * limit)
+                .take(limit)
+                .getManyAndCount()
 
-            let items = []
+            // Get unique IDs for bulk queries
+            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
 
-            for (const checklist of checklists) {
-                const user = await repoUser.findOne({ where: { id: checklist.id_usuario } })
-                const veiculo = await repoVeiculo.findOne({ where: { id: checklist.id_veiculo } })
-                const empresa = await repoEmpresa.findOne({ where: { id: checklist.id_empresa } })
+            // Bulk fetch related data
+            const [users, veiculos, empresas] = await Promise.all([
+                userIds.length > 0 ? db.getRepository(User).find({ where: { id: In(userIds) } }) : [],
+                veiculoIds.length > 0 ? db.getRepository(Veiculo).find({ where: { id: In(veiculoIds) } }) : [],
+                empresaIds.length > 0 ? db.getRepository(Empresa).find({ where: { id: In(empresaIds) } }) : []
+            ])
 
-                items.push({
+            // Create lookup maps for O(1) access
+            const userMap = new Map(users.map(u => [u.id, u]))
+            const veiculoMap = new Map(veiculos.map(v => [v.id, v]))
+            const empresaMap = new Map(empresas.map(e => [e.id, e]))
+
+            const items = checklists.map(checklist => {
+                const user = userMap.get(checklist.id_usuario)
+                const veiculo = veiculoMap.get(checklist.id_veiculo)
+                const empresa = empresaMap.get(checklist.id_empresa)
+
+                return {
                     ...checklist,
                     tipo: 'mensal',
                     id: Number(checklist.id),
@@ -193,16 +231,16 @@ export async function GET (request: NextRequest) {
                     },
                     created_at: checklist.created_at,
                     updated_at: checklist.updated_at,
-                })
-            }
+                }
+            })
 
             await db.destroy()
 
             return NextResponse.json({
                 items: items,
-                current: Number(querySearch.get('page') || 1),
-                last: Math.ceil(total / Number(querySearch.get('limit') || 20)),
-                per_page: Number(querySearch.get('limit') || 20),
+                current: page,
+                last: Math.ceil(total / limit),
+                per_page: limit,
                 total: total,
             }, { status: 200, statusText: 'OK' })
         } else if (type === 'semanal') {
@@ -213,11 +251,11 @@ export async function GET (request: NextRequest) {
             }
 
             if (usuario_id > 0) {
-                querySemanal = querySemanal.where('checklist_semanal.id_usuario = :usuario_id', { usuario_id })
+                querySemanal = querySemanal.andWhere('checklist_semanal.id_usuario = :usuario_id', { usuario_id })
             }
 
             if (veiculo_id > 0) {
-                querySemanal = querySemanal.where('checklist_semanal.id_veiculo = :veiculo_id', { veiculo_id })
+                querySemanal = querySemanal.andWhere('checklist_semanal.id_veiculo = :veiculo_id', { veiculo_id })
             }
 
             if (inicio || fim) {
@@ -234,17 +272,36 @@ export async function GET (request: NextRequest) {
             }
 
             querySemanal = querySemanal.orderBy('checklist_semanal.created_at', 'DESC')
+                .addOrderBy('checklist_semanal.id', 'DESC')
 
-            const [checklists, total] = await querySemanal.skip((Number(querySearch.get('page') || 1) - 1) * Number(querySearch.get('limit') || 20)).take(Number(querySearch.get('limit') || 20)).getManyAndCount()
+            const [checklists, total] = await querySemanal
+                .skip((page - 1) * limit)
+                .take(limit)
+                .getManyAndCount()
 
-            let items = []
+            // Get unique IDs for bulk queries
+            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
 
-            for (const checklist of checklists) {
-                const user = await repoUser.findOne({ where: { id: checklist.id_usuario } })
-                const veiculo = await repoVeiculo.findOne({ where: { id: checklist.id_veiculo } })
-                const empresa = await repoEmpresa.findOne({ where: { id: checklist.id_empresa } })
+            // Bulk fetch related data
+            const [users, veiculos, empresas] = await Promise.all([
+                userIds.length > 0 ? db.getRepository(User).find({ where: { id: In(userIds) } }) : [],
+                veiculoIds.length > 0 ? db.getRepository(Veiculo).find({ where: { id: In(veiculoIds) } }) : [],
+                empresaIds.length > 0 ? db.getRepository(Empresa).find({ where: { id: In(empresaIds) } }) : []
+            ])
 
-                items.push({
+            // Create lookup maps for O(1) access
+            const userMap = new Map(users.map(u => [u.id, u]))
+            const veiculoMap = new Map(veiculos.map(v => [v.id, v]))
+            const empresaMap = new Map(empresas.map(e => [e.id, e]))
+
+            const items = checklists.map(checklist => {
+                const user = userMap.get(checklist.id_usuario)
+                const veiculo = veiculoMap.get(checklist.id_veiculo)
+                const empresa = empresaMap.get(checklist.id_empresa)
+
+                return {
                     ...checklist,
                     tipo: 'semanal',
                     id: Number(checklist.id),
@@ -280,16 +337,16 @@ export async function GET (request: NextRequest) {
                     },
                     created_at: checklist.created_at,
                     updated_at: checklist.updated_at,
-                })
-            }
+                }
+            })
 
             await db.destroy()
 
             return NextResponse.json({
                 items: items,
-                current: Number(querySearch.get('page') || 1),
-                last: Math.ceil(total / Number(querySearch.get('limit') || 20)),
-                per_page: Number(querySearch.get('limit') || 20),
+                current: page,
+                last: Math.ceil(total / limit),
+                per_page: limit,
                 total: total,
             }, { status: 200, statusText: 'OK' })
         }

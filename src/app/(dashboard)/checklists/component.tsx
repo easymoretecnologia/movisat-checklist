@@ -53,11 +53,11 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
 
     const hasInconformidades = React.useCallback((checklist: Diario | Mensal | Semanal) => {
         if (checklist.tipo === 'diario') {
-            return checklist.farois.toLowerCase() === 'sim' || checklist.lataria.toLowerCase() === 'sim' || checklist.vidros.toLowerCase() === 'sim' || checklist.hodometro.toLowerCase() === 'sim' || checklist.combustivel.toLowerCase() === 'sim' || checklist.agua.toLowerCase() === 'sim'
+            return checklist.farois.toLowerCase() === 'sim' || checklist.lataria.toLowerCase() === 'sim' || checklist.vidros.toLowerCase() === 'sim' || checklist.hodometro.toLowerCase() === 'sim' || checklist.combustivel.toLowerCase() === 'sim' || checklist.agua.toLowerCase() === 'sim' || checklist.luzes.toLowerCase() === 'sim'
         }
 
         if (checklist.tipo === 'semanal') {
-            return checklist.oleo_motor.toLowerCase() === 'sim' || checklist.agua_limpador.toLowerCase() === 'sim' || checklist.oleo_freio.toLowerCase() === 'sim' || checklist.pneus.toLowerCase() === 'sim' || checklist.escapamento.toLowerCase() === 'sim' || checklist.vidros.toLowerCase() === 'sim'
+            return checklist.oleo_motor.toLowerCase() === 'sim' || checklist.agua_limpador.toLowerCase() === 'sim' || checklist.oleo_freio.toLowerCase() === 'sim' || checklist.pneus.toLowerCase() === 'sim' || checklist.escapamento.toLowerCase() === 'sim' || checklist.vidros.toLowerCase() === 'sim' || checklist.luzes.toLowerCase() === 'sim'
         }
 
         if (checklist.tipo === 'mensal') {
@@ -133,6 +133,13 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                                 <strong>Água:</strong> {checklist.agua_obs ? checklist.agua_obs : 'Não informado'}
                             </Typography>
                         )}
+
+                        {checklist.luzes.toLowerCase() === 'sim' && (
+                            <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                                <Icon icon='solar:info-square-linear' fontSize={20} />
+                                <strong>Luzes:</strong> {checklist.luzes_obs ? checklist.luzes_obs : 'Não informado'}
+                            </Typography>
+                        )}
                     </React.Fragment>
                 ),
                 onAction: () => closeDialog(),
@@ -186,6 +193,13 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Vidros:</strong> {checklist.vidros_obs ? checklist.vidros_obs : 'Não informado'}
+                        </Typography>
+                    )}
+
+                    {checklist.luzes.toLowerCase() === 'sim' && (
+                        <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                            <Icon icon='solar:info-square-linear' fontSize={20} />
+                            <strong>Luzes:</strong> {checklist.luzes_obs ? checklist.luzes_obs : 'Não informado'}
                         </Typography>
                     )}
                 </React.Fragment>,

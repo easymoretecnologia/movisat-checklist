@@ -69,16 +69,25 @@ export class ChecklistDiario {
     agua_images: string[]
 
     @Column({ type: 'text', nullable: true })
+    luzes: string
+
+    @Column({ type: 'text', nullable: true })
+    luzes_obs: string
+
+    @Column({ type: 'json', nullable: true })
+    luzes_images: string[]
+
+    @Column({ type: 'text', nullable: true })
     status: string
 
     @Column({ type: 'text', nullable: true })
     selfie_motorista: string
 
     @Column({ type: 'text', nullable: true })
-    ciencia_inconformidades: string
+    ciencia_inconformidades: string | null
 
     @Column({ type: 'timestamp', nullable: true })
-    ultimo_checklist: string
+    ultimo_checklist: string | null
 
     @CreateDateColumn()
     created_at: string
@@ -180,7 +189,7 @@ export class ChecklistMensal {
     selfie_motorista: string
 
     @Column({ type: 'text', nullable: true })
-    ciencia_inconformidades: string
+    ciencia_inconformidades: string | null
 
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string
@@ -261,13 +270,22 @@ export class ChecklistSemanal {
     vidros_images: string[]
 
     @Column({ type: 'text', nullable: true })
+    luzes: string
+
+    @Column({ type: 'text', nullable: true })
+    luzes_obs: string
+
+    @Column({ type: 'json', nullable: true })
+    luzes_images: string[]
+
+    @Column({ type: 'text', nullable: true })
     status: string
 
     @Column({ type: 'text', nullable: true })
     selfie_motorista: string
 
     @Column({ type: 'text', nullable: true })
-    ciencia_inconformidades: string
+    ciencia_inconformidades: string | null
 
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string

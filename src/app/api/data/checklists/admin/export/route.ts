@@ -98,6 +98,7 @@ export async function GET (request: NextRequest) {
                     hodometro: checklist.hodometro.toLowerCase() === 'sim' ? `Hodômetro com inconformidade: ${checklist.hodometro_obs ? checklist.hodometro_obs : 'Não informado'}` : 'Sem inconformidade',
                     combustivel: checklist.combustivel.toLowerCase() === 'sim' ? `Combustível com inconformidade: ${checklist.combustivel_obs ? checklist.combustivel_obs : 'Não informado'}` : 'Sem inconformidade',
                     agua: checklist.agua.toLowerCase() === 'sim' ? `Água com inconformidade: ${checklist.agua_obs ? checklist.agua_obs : 'Não informado'}` : 'Sem inconformidade',
+                    luzes: checklist.luzes.toLowerCase() === 'sim' ? `Luzes com inconformidade: ${checklist.luzes_obs ? checklist.luzes_obs : 'Não informado'}` : 'Sem inconformidade',
                     created_at: checklist.created_at,
                 })
             }
@@ -288,6 +289,7 @@ export async function GET (request: NextRequest) {
                     pneus: checklist.pneus.toLowerCase() === 'sim' ? `Pneus com inconformidade: ${checklist.pneus_obs ? checklist.pneus_obs : 'Não informado'}` : 'Sem inconformidade',
                     escapamento: checklist.escapamento.toLowerCase() === 'sim' ? `Escapamento com inconformidade: ${checklist.escapamento_obs ? checklist.escapamento_obs : 'Não informado'}` : 'Sem inconformidade',
                     vidros: checklist.vidros.toLowerCase() === 'sim' ? `Vidros com inconformidade: ${checklist.vidros_obs ? checklist.vidros_obs : 'Não informado'}` : 'Sem inconformidade',
+                    luzes: checklist.luzes.toLowerCase() === 'sim' ? `Luzes com inconformidade: ${checklist.luzes_obs ? checklist.luzes_obs : 'Não informado'}` : 'Sem inconformidade',
                     created_at: checklist.created_at,
                 })
             }

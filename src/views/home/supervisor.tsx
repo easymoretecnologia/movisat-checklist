@@ -50,6 +50,11 @@ export default ({ session, lembretes: _lembretes, notificacoes: _notificacoes }:
                                 </Typography>
                             </Alert>
                         ))}
+                        {lembretes.length === 0 && (
+                            <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2 }}>
+                                Nenhum lembrete encontrado.
+                            </Typography>
+                        )}
                     </CardContent>
                 </Card>
             </Grid2>
