@@ -7,10 +7,11 @@ const UPLOAD_DIR = join(process.cwd(), 'public', 'uploads')
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
-    const filePath = join(UPLOAD_DIR, ...params.path)
+    const resolvedParams = await params
+    const filePath = join(UPLOAD_DIR, ...resolvedParams.path)
     
     // Security check - ensure the file is within the uploads directory
     if (!filePath.startsWith(UPLOAD_DIR)) {
@@ -63,10 +64,11 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
   try {
-    const filePath = join(UPLOAD_DIR, ...params.path)
+    const resolvedParams = await params
+    const filePath = join(UPLOAD_DIR, ...resolvedParams.path)
     
     // Security check - ensure the file is within the uploads directory
     if (!filePath.startsWith(UPLOAD_DIR)) {
