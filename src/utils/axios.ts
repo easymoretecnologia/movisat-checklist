@@ -68,6 +68,7 @@ export async function request<T = any>({
   const request = axios.request(options)
 
   if (process) {
+    console.log(request)
     const response = request.then((response: AxiosResponse<T>) => {
       if (!Http.ok(response.status)) {
         if (response instanceof XMLHttpRequest) {
@@ -83,7 +84,7 @@ export async function request<T = any>({
         }
         throw response
       }
-
+      console.log(response)
       return response
     }).catch((error: AxiosResponse<T> | Exception) => {
       try {
