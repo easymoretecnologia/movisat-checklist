@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide Next.js development mode banner and overlay */
+div[data-nextjs-portal] {
+  display: none !important;
+}
+
+/* Hide React error overlay in production */
+iframe[title="react-error-overlay"] {
+  display: none !important;
+}
+
+/* Hide webpack dev server overlay */
+div[data-webpack-error-overlay] {
+  display: none !important;
+}
+
 :root {
   --border-radius: var(--mui-shape-borderRadius);
   --border-color: var(--mui-palette-divider);

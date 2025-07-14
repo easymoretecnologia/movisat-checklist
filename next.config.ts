@@ -6,32 +6,41 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
-  webpack: (config, { isServer }) => {
+  // Disable development overlay in production
+  reactStrictMode: false,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  experimental: {
+    reactCompiler: false,
+  },
+  // Disable error overlay
+  onDemandEntries: {
+    // Period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // Number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2,
+  },
+  webpack: (config, { isServer, dev }) => {
     // Only apply externals for client-side builds
     if (!isServer) {
-      config.externals = [
-        ...(config.externals || []),
-        'react-native-sqlite-storage',
-        'mysql',
-        'mysql2',
-        'pg',
-        'pg-query-stream',
-        'redis',
-        'sqlite3',
-        'tedious',
-        'oracledb',
-        'mongodb',
-        'typeorm-aurora-data-api-driver',
-        'better-sqlite3',
-        'sql.js',
-        'react-native-sqlite-2',
-        '@sap/hana-client/extension/Stream',
-        '@sap/hana-client',
-        'hdb-pool',
-        'spanner',
-        'ioredis',
-        'koa'
-      ]
+      config.externals = {
+        ...config.externals,
+        'mysql2': 'commonjs mysql2',
+        'typeorm': 'commonjs typeorm',
+        'reflect-metadata': 'commonjs reflect-metadata',
+        'class-transformer': 'commonjs class-transformer',
+        'class-validator': 'commonjs class-validator',
+      }
+    }
+
+    // Disable error overlay in production
+    if (!dev) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'react-dev-utils/webpackHotDevClient': false,
+        'react-dev-utils/errorOverlayMiddleware': false,
+      }
     }
 
     // Ignore files that cause issues with TypeORM for both client and server

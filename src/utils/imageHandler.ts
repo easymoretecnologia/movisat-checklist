@@ -13,7 +13,7 @@ export async function ensureUploadDir() {
     }
 }
 
-// Save base64 image to file and return the file path
+// Save base64 image to file and return the API route path
 export async function saveBase64Image(base64Data: string, prefix: string = 'img'): Promise<string> {
     if (!base64Data || !base64Data.includes(',')) {
         throw new Error('Invalid base64 data')
@@ -36,8 +36,8 @@ export async function saveBase64Image(base64Data: string, prefix: string = 'img'
     const buffer = Buffer.from(base64Content, 'base64')
     await fs.writeFile(filepath, buffer)
     
-    // Return the relative path for web access
-    return `/uploads/checklists/${filename}`
+    // Return the API route path for serving the image
+    return `/api/uploads/checklists/${filename}`
 }
 
 // Save multiple base64 images from an array
@@ -50,13 +50,21 @@ export async function saveBase64Images(base64Array: string[], prefix: string = '
     return Promise.all(promises)
 }
 
-// Delete image file
+// Delete image file using API route
 export async function deleteImageFile(imagePath: string): Promise<void> {
     if (!imagePath) return
     
     try {
-        const fullPath = join(process.cwd(), 'public', imagePath)
-        await fs.unlink(fullPath)
+        // If it's an API route path, convert to file path
+        if (imagePath.startsWith('/api/uploads/')) {
+            const relativePath = imagePath.replace('/api/uploads/', '')
+            const fullPath = join(process.cwd(), 'public', 'uploads', relativePath)
+            await fs.unlink(fullPath)
+        } else {
+            // Legacy support for direct public paths
+            const fullPath = join(process.cwd(), 'public', imagePath)
+            await fs.unlink(fullPath)
+        }
     } catch (error) {
         // File might not exist, log but don't throw
         console.warn(`Failed to delete image file: ${imagePath}`, error)
@@ -87,4 +95,17 @@ export function parseImagePaths(imageData: any): string[] {
     }
     
     return Array.isArray(imageData) ? imageData : [imageData]
+}
+
+// Helper function to convert old public paths to API routes (for migration)
+export function convertToApiPath(imagePath: string): string {
+    if (imagePath.startsWith('/api/uploads/')) {
+        return imagePath // Already an API path
+    }
+    
+    if (imagePath.startsWith('/uploads/')) {
+        return `/api${imagePath}`
+    }
+    
+    return imagePath
 } 
