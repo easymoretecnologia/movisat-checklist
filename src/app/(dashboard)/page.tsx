@@ -23,7 +23,8 @@ const Page = async ({ params, searchParams }: { params: Promise<{}>, searchParam
         </Authorized>
     } else if (session.user.tipo_acesso === 1) {
         const lembretes = await axios.get({ raw: true, url: '/api/data/lembretes/list', data: { auth_id: session.user.id }, token: session.accessToken, process: false, message: false })
-        
+        console.log(lembretes.data)
+
         if (Http.failed(lembretes.status)) {
             if (Http.is('Unauthorized', lembretes.status)) {
                 return <><AuthRedirect to='/login' /></>
@@ -31,8 +32,9 @@ const Page = async ({ params, searchParams }: { params: Promise<{}>, searchParam
             
             return <><AuthRedirect to='/500' /></>
         }
-        
+
         const notificacoes = await axios.get({ raw: true, url: '/api/data/notificacoes/recents', data: { auth_id: session.user.id }, token: session.accessToken, process: false, message: false })
+        console.log(notificacoes.data)
 
         if (Http.failed(notificacoes.status)) {
             if (Http.is('Unauthorized', notificacoes.status)) {
@@ -48,7 +50,8 @@ const Page = async ({ params, searchParams }: { params: Promise<{}>, searchParam
     }
 
     const veiculos = await axios.get({ raw: true, url: '/api/data/motorista/veiculos', data: { auth_id: session.user.id }, token: session.accessToken, process: false, message: false })
-        
+    console.log(veiculos.data)
+
     if (Http.failed(veiculos.status)) {
         if (Http.is('Unauthorized', veiculos.status)) {
             return <><AuthRedirect to='/login' /></>
