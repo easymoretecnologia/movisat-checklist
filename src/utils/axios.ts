@@ -65,11 +65,10 @@ export async function request<T = any>({
     options.baseURL = ''
   }
 
-  const request = axios.request(options)
+  const axiosRequest = axios.request(options)
 
   if (process) {
-    console.log(request)
-    const response = request.then((response: AxiosResponse<T>) => {
+    const response = axiosRequest.then((response: AxiosResponse<T>) => {
       if (!Http.ok(response.status)) {
         if (response instanceof XMLHttpRequest) {
           throw new Exception(
@@ -84,7 +83,6 @@ export async function request<T = any>({
         }
         throw response
       }
-      console.log(response)
       return response
     }).catch((error: AxiosResponse<T> | Exception) => {
       try {
@@ -114,7 +112,7 @@ export async function request<T = any>({
     return response as Promise<AxiosResponse<T>>
   }
 
-  return request as Promise<AxiosResponse<T>>
+  return axiosRequest as Promise<AxiosResponse<T>>
 }
 
 export default {
