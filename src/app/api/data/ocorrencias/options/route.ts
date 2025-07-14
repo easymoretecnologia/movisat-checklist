@@ -1,8 +1,7 @@
-import { ChecklistDiario, ChecklistMensal, ChecklistSemanal } from "@/entities/checklist.entity";
+import { Empresa } from "@/entities/empresa.entity";
 import User from "@/entities/user.entity";
 import { Veiculo } from "@/entities/veiculo.entity";
 import useDatabase from "@/hooks/useDatabase";
-import useLog from "@/hooks/useLog";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET (request: NextRequest) {
@@ -19,8 +18,8 @@ export async function GET (request: NextRequest) {
 
     try {
         const db = await useDatabase()
-        const userRepository = db.getRepository(User)
-        const auth = await userRepository.findOne({ where: { id: Number(auth_id), remember_token: token } })
+        const repoUser = db.getRepository(User)
+        const auth = await repoUser.findOne({ where: { id: Number(auth_id), remember_token: token } })
 
         if (!auth) {
             return NextResponse.json({ message: 'Usuário não autenticado.' }, { status: 401, statusText: 'Unauthorized' })
@@ -29,21 +28,35 @@ export async function GET (request: NextRequest) {
         } else if (auth && (Number(auth.id_empresa) === 0 || !auth.id_empresa)) {
             return NextResponse.json({ message: 'Usuário não autorizado.' }, { status: 403, statusText: 'Forbidden' })
         }
+
+        const repoEmpresa = db.getRepository(Empresa)
         
-        const repoVeiculos = db.getRepository(Veiculo)
-        const veiculos = await repoVeiculos.find({ where: { id_empresa: Number(auth.id_empresa) } })
+        const empresa = await repoEmpresa.findOne({ where: { id: Number(auth.id_empresa) } })
 
-        const repoDiarios = db.getRepository(ChecklistDiario)
-        const repoMensais = db.getRepository(ChecklistMensal)
-        const repoSemanais = db.getRepository(ChecklistSemanal)
+        if (!empresa) {
+            return NextResponse.json({ message: 'Empresa não encontrada.' }, { status: 404, statusText: 'Not Found' })
+        }
+        
+        const repoVeiculo = db.getRepository(Veiculo)
 
-        const diarios = await repoDiarios.find({
-            where: {
-                id_empresa: Number(auth.id_empresa),
-            }
-        })
+        const queryusers = await repoUser.find({ where: { tipo_acesso: 2, id_empresa: Number(auth.id_empresa) } })
+        const queryveiculos = await repoVeiculo.find({ where: { id_empresa: Number(auth.id_empresa) } })
+
+        await db.destroy()
+
+        const users = queryusers.map(user => ({
+            id: Number(user.id),
+            nome: user.nome,
+        }))
+
+        const veiculos = queryveiculos.map(veiculo => ({
+            id: Number(veiculo.id),
+            apelido: veiculo.apelido,
+            placa: veiculo.placa,
+        }))
+
+        return NextResponse.json({ usuarios: users, veiculos }, { status: 200, statusText: 'OK' })
     } catch (error) {
-        useLog(error)
-        return NextResponse.json({ message: 'Erro ao buscar conformidades.' }, { status: 500, statusText: 'Internal Server Error' })
+        return NextResponse.json({ message: 'Erro ao buscar dados.' }, { status: 500, statusText: 'Internal Server Error' })
     }
 }

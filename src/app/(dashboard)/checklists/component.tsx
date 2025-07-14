@@ -57,11 +57,11 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
         }
 
         if (checklist.tipo === 'semanal') {
-            return checklist.oleo_motor.toLowerCase() === 'sim' || checklist.agua_limpador.toLowerCase() === 'sim' || checklist.oleo_freio.toLowerCase() === 'sim' || checklist.pneus.toLowerCase() === 'sim' || checklist.escapamento.toLowerCase() === 'sim' || checklist.vidros.toLowerCase() === 'sim' || checklist.luzes.toLowerCase() === 'sim'
+            return checklist.oleo_motor.toLowerCase() === 'não' || checklist.agua_limpador.toLowerCase() === 'não' || checklist.oleo_freio.toLowerCase() === 'não' || checklist.pneus.toLowerCase() === 'não' || checklist.escapamento.toLowerCase() === 'não' || checklist.vidros.toLowerCase() === 'não' || checklist.luzes.toLowerCase() === 'não'
         }
 
         if (checklist.tipo === 'mensal') {
-            return checklist.estofados.toLowerCase() === 'sim' || checklist.documentacao.toLowerCase() === 'sim' || checklist.volante.toLowerCase() === 'sim' || checklist.cambio.toLowerCase() === 'sim' || checklist.higiene_interna.toLowerCase() === 'sim' || checklist.porta_malas.toLowerCase() === 'sim' || checklist.bateria.toLowerCase() === 'sim' || checklist.farois.toLowerCase() === 'sim'
+            return checklist.estofados.toLowerCase() === 'não' || checklist.documentacao.toLowerCase() === 'não' || checklist.volante.toLowerCase() === 'não' || checklist.cambio.toLowerCase() === 'não' || checklist.higiene_interna.toLowerCase() === 'não' || checklist.porta_malas.toLowerCase() === 'não' || checklist.bateria.toLowerCase() === 'não' || checklist.farois.toLowerCase() === 'não'
         }
 
         return false
@@ -154,49 +154,49 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                 open: true,
                 title: `Checklist Semanal #${checklist.id} - Inconformidades`,
                 content: <React.Fragment>
-                    {checklist.oleo_motor.toLowerCase() === 'sim' && (
+                    {checklist.oleo_motor.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Óleo do Motor:</strong> {checklist.oleo_motor_obs ? checklist.oleo_motor_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.agua_limpador.toLowerCase() === 'sim' && (
+                    {checklist.agua_limpador.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Água do Limpador:</strong> {checklist.agua_limpador_obs ? checklist.agua_limpador_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.oleo_freio.toLowerCase() === 'sim' && (
+                    {checklist.oleo_freio.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Óleo do Freio:</strong> {checklist.oleo_freio_obs ? checklist.oleo_freio_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.pneus.toLowerCase() === 'sim' && (
+                    {checklist.pneus.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Pneus:</strong> {checklist.pneus_obs ? checklist.pneus_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.escapamento.toLowerCase() === 'sim' && (
+                    {checklist.escapamento.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Escapamento:</strong> {checklist.escapamento_obs ? checklist.escapamento_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.vidros.toLowerCase() === 'sim' && (
+                    {checklist.vidros.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Vidros:</strong> {checklist.vidros_obs ? checklist.vidros_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.luzes.toLowerCase() === 'sim' && (
+                    {checklist.luzes.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Luzes:</strong> {checklist.luzes_obs ? checklist.luzes_obs : 'Não informado'}
@@ -215,56 +215,56 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                 open: true,
                 title: `Checklist Mensal #${checklist.id} - Inconformidades`,
                 content: <React.Fragment>
-                    {checklist.estofados.toLowerCase() === 'sim' && (
+                    {checklist.estofados.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Estofados:</strong> {checklist.estofados_obs ? checklist.estofados_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.documentacao.toLowerCase() === 'sim' && (
+                    {checklist.documentacao.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Documentação:</strong> {checklist.documentacao_obs ? checklist.documentacao_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.volante.toLowerCase() === 'sim' && (
+                    {checklist.volante.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Volante:</strong> {checklist.volante_obs ? checklist.volante_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.cambio.toLowerCase() === 'sim' && (
+                    {checklist.cambio.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Câmbio:</strong> {checklist.cambio_obs ? checklist.cambio_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.higiene_interna.toLowerCase() === 'sim' && (
+                    {checklist.higiene_interna.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Higiene Interna:</strong> {checklist.higiene_interna_obs ? checklist.higiene_interna_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.porta_malas.toLowerCase() === 'sim' && (
+                    {checklist.porta_malas.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Porta Malas:</strong> {checklist.porta_malas_obs ? checklist.porta_malas_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.bateria.toLowerCase() === 'sim' && (
+                    {checklist.bateria.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Bateria:</strong> {checklist.bateria_obs ? checklist.bateria_obs : 'Não informado'}
                         </Typography>
                     )}
 
-                    {checklist.farois.toLowerCase() === 'sim' && (
+                    {checklist.farois.toLowerCase() === 'não' && (
                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                             <Icon icon='solar:info-square-linear' fontSize={20} />
                             <strong>Faróis:</strong> {checklist.farois_obs ? checklist.farois_obs : 'Não informado'}

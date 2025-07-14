@@ -68,9 +68,9 @@ export async function GET (request: NextRequest) {
                 .getManyAndCount()
 
             // Get unique IDs for bulk queries
-            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
-            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
-            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
+            const userIds = [...new Set(checklists.map(c => Number(c.id_usuario)).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => Number(c.id_veiculo)).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => Number(c.id_empresa)).filter(id => id > 0))]
 
             // Bulk fetch related data
             const [users, veiculos, empresas] = await Promise.all([
@@ -85,9 +85,9 @@ export async function GET (request: NextRequest) {
             const empresaMap = new Map(empresas.map(e => [e.id, e]))
 
             const items = checklists.map(checklist => {
-                const user = userMap.get(checklist.id_usuario)
-                const veiculo = veiculoMap.get(checklist.id_veiculo)
-                const empresa = empresaMap.get(checklist.id_empresa)
+                const user = userMap.get(Number(checklist.id_usuario))
+                const veiculo = veiculoMap.get(Number(checklist.id_veiculo))
+                const empresa = empresaMap.get(Number(checklist.id_empresa))
 
                 return {
                     ...checklist,
@@ -174,9 +174,9 @@ export async function GET (request: NextRequest) {
                 .getManyAndCount()
 
             // Get unique IDs for bulk queries
-            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
-            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
-            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
+            const userIds = [...new Set(checklists.map(c => Number(c.id_usuario)).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => Number(c.id_veiculo)).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => Number(c.id_empresa)).filter(id => id > 0))]
 
             // Bulk fetch related data
             const [users, veiculos, empresas] = await Promise.all([
@@ -191,9 +191,9 @@ export async function GET (request: NextRequest) {
             const empresaMap = new Map(empresas.map(e => [e.id, e]))
 
             const items = checklists.map(checklist => {
-                const user = userMap.get(checklist.id_usuario)
-                const veiculo = veiculoMap.get(checklist.id_veiculo)
-                const empresa = empresaMap.get(checklist.id_empresa)
+                const user = userMap.get(Number(checklist.id_usuario))
+                const veiculo = veiculoMap.get(Number(checklist.id_veiculo))
+                const empresa = empresaMap.get(Number(checklist.id_empresa))
 
                 return {
                     ...checklist,
@@ -280,9 +280,9 @@ export async function GET (request: NextRequest) {
                 .getManyAndCount()
 
             // Get unique IDs for bulk queries
-            const userIds = [...new Set(checklists.map(c => c.id_usuario).filter(id => id > 0))]
-            const veiculoIds = [...new Set(checklists.map(c => c.id_veiculo).filter(id => id > 0))]
-            const empresaIds = [...new Set(checklists.map(c => c.id_empresa).filter(id => id > 0))]
+            const userIds = [...new Set(checklists.map(c => Number(c.id_usuario)).filter(id => id > 0))]
+            const veiculoIds = [...new Set(checklists.map(c => Number(c.id_veiculo)).filter(id => id > 0))]
+            const empresaIds = [...new Set(checklists.map(c => Number(c.id_empresa)).filter(id => id > 0))]
 
             // Bulk fetch related data
             const [users, veiculos, empresas] = await Promise.all([
@@ -297,9 +297,9 @@ export async function GET (request: NextRequest) {
             const empresaMap = new Map(empresas.map(e => [e.id, e]))
 
             const items = checklists.map(checklist => {
-                const user = userMap.get(checklist.id_usuario)
-                const veiculo = veiculoMap.get(checklist.id_veiculo)
-                const empresa = empresaMap.get(checklist.id_empresa)
+                const user = userMap.get(Number(checklist.id_usuario))
+                const veiculo = veiculoMap.get(Number(checklist.id_veiculo))
+                const empresa = empresaMap.get(Number(checklist.id_empresa))
 
                 return {
                     ...checklist,

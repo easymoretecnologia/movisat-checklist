@@ -1128,12 +1128,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.estofados === 'sim' && (
+                                {mensal.estofados === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Estofados - Observações' name='estofados_obs' multiline rows={2} value={mensal.estofados_obs} onChange={(e) => onChangeMensal('estofados_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.estofados === 'sim' && (
+                                {mensal.estofados === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1169,12 +1169,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.documentacao === 'sim' && (
+                                {mensal.documentacao === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Documentação - Observações' name='documentacao_obs' multiline rows={2} value={mensal.documentacao_obs} onChange={(e) => onChangeMensal('documentacao_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.documentacao === 'sim' && (
+                                {mensal.documentacao === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1210,12 +1210,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.volante === 'sim' && (
+                                {mensal.volante === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Volante - Observações' name='volante_obs' multiline rows={2} value={mensal.volante_obs} onChange={(e) => onChangeMensal('volante_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.volante === 'sim' && (
+                                {mensal.volante === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1251,12 +1251,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.cambio === 'sim' && (
+                                {mensal.cambio === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Câmbio - Observações' name='cambio_obs' multiline rows={2} value={mensal.cambio_obs} onChange={(e) => onChangeMensal('cambio_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.cambio === 'sim' && (
+                                {mensal.cambio === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1292,12 +1292,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.higiene_interna === 'sim' && (
+                                {mensal.higiene_interna === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Higiene interna - Observações' name='higiene_interna_obs' multiline rows={2} value={mensal.higiene_interna_obs} onChange={(e) => onChangeMensal('higiene_interna_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.higiene_interna === 'sim' && (
+                                {mensal.higiene_interna === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1333,12 +1333,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.porta_malas === 'sim' && (
+                                {mensal.porta_malas === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Porta-malas - Observações' name='porta_malas_obs' multiline rows={2} value={mensal.porta_malas_obs} onChange={(e) => onChangeMensal('porta_malas_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.porta_malas === 'sim' && (
+                                {mensal.porta_malas === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1374,12 +1374,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.bateria === 'sim' && (
+                                {mensal.bateria === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Bateria - Observações' name='bateria_obs' multiline rows={2} value={mensal.bateria_obs} onChange={(e) => onChangeMensal('bateria_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.bateria === 'sim' && (
+                                {mensal.bateria === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1415,12 +1415,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {mensal.farois === 'sim' && (
+                                {mensal.farois === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Faróis - Observações' name='farois_obs' multiline rows={2} value={mensal.farois_obs} onChange={(e) => onChangeMensal('farois_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {mensal.farois === 'sim' && (
+                                {mensal.farois === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1494,12 +1494,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.oleo_motor === 'sim' && (
+                                {semanal.oleo_motor === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Oleo do motor - Observações' name='oleo_motor_obs' multiline rows={2} value={semanal.oleo_motor_obs} onChange={(e) => onChangeSemanal('oleo_motor_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.oleo_motor === 'sim' && (
+                                {semanal.oleo_motor === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1535,12 +1535,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.agua_limpador === 'sim' && (
+                                {semanal.agua_limpador === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Água do limpador - Observações' name='agua_limpador_obs' multiline rows={2} value={semanal.agua_limpador_obs} onChange={(e) => onChangeSemanal('agua_limpador_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.agua_limpador === 'sim' && (
+                                {semanal.agua_limpador === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1576,12 +1576,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.oleo_freio === 'sim' && (
+                                {semanal.oleo_freio === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Óleo do freio - Observações' name='oleo_freio_obs' multiline rows={2} value={semanal.oleo_freio_obs} onChange={(e) => onChangeSemanal('oleo_freio_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.oleo_freio === 'sim' && (
+                                {semanal.oleo_freio === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1617,12 +1617,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.pneus === 'sim' && (
+                                {semanal.pneus === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Pneus - Observações' name='pneus_obs' multiline rows={2} value={semanal.pneus_obs} onChange={(e) => onChangeSemanal('pneus_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.pneus === 'sim' && (
+                                {semanal.pneus === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1658,12 +1658,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.escapamento === 'sim' && (
+                                {semanal.escapamento === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Escapamento - Observações' name='escapamento_obs' multiline rows={2} value={semanal.escapamento_obs} onChange={(e) => onChangeSemanal('escapamento_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.escapamento === 'sim' && (
+                                {semanal.escapamento === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1699,12 +1699,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.vidros === 'sim' && (
+                                {semanal.vidros === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Vidros - Observações' name='vidros_obs' multiline rows={2} value={semanal.vidros_obs} onChange={(e) => onChangeSemanal('vidros_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.vidros === 'sim' && (
+                                {semanal.vidros === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}
@@ -1740,12 +1740,12 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         </Typography>
                                     </Button>
                                 </Box>
-                                {semanal.luzes === 'sim' && (
+                                {semanal.luzes === 'nao' && (
                                     <Box sx={{ }}>
                                         <Inputs.TextField label='Luzes - Observações' name='luzes_obs' multiline rows={2} value={semanal.luzes_obs} onChange={(e) => onChangeSemanal('luzes_obs', e.target.value)} />
                                     </Box>
                                 )}
-                                {semanal.luzes === 'sim' && (
+                                {semanal.luzes === 'nao' && (
                                     <Button
                                         component="label"
                                         role={undefined}

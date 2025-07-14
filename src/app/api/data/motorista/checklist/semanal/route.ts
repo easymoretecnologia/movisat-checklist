@@ -160,7 +160,7 @@ export async function POST (request: NextRequest) {
         })
         await repoNotificacao.save(notificacao)
 
-        if (oleo_motor === 'sim' || agua_limpador === 'sim' || oleo_freio === 'sim' || pneus === 'sim' || escapamento === 'sim' || vidros === 'sim' || luzes === 'sim') {
+        if (oleo_motor === 'nao' || agua_limpador === 'nao' || oleo_freio === 'nao' || pneus === 'nao' || escapamento === 'nao' || vidros === 'nao' || luzes === 'nao') {
             const notificacaoInconformidades = repoNotificacao.create({
                 usuario_id: Number(user.id),
                 descricao: `Checklist semanal (#${checklist.id}) com inconformidades!`,

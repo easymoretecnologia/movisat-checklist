@@ -170,7 +170,7 @@ export async function POST (request: NextRequest) {
         })
         await repoNotificacao.save(notificacao)
 
-        if (estofados === 'sim' || documentacao === 'sim' || volante === 'sim' || cambio === 'sim' || higiene_interna === 'sim' || porta_malas === 'sim' || bateria === 'sim' || farois === 'sim') {
+        if (estofados === 'nao' || documentacao === 'nao' || volante === 'nao' || cambio === 'nao' || higiene_interna === 'nao' || porta_malas === 'nao' || bateria === 'nao' || farois === 'nao') {
             const notificacaoInconformidades = repoNotificacao.create({
                 usuario_id: Number(user.id),
                 descricao: `Checklist mensal (#${checklist.id}) com inconformidades!`,
