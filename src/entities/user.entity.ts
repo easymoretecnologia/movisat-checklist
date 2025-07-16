@@ -17,7 +17,7 @@ export class User {
     @Column({ length: 1020 })
     password: string
 
-    @Column({ type: 'integer' })
+    @Column({ type: 'integer', default: 0 })
     tipo_acesso: number
 
     @Column({ length: 20, nullable: true })

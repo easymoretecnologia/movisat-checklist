@@ -250,7 +250,7 @@ export default ({ session, empresas }: Props) => {
                                         input: {
                                             inputComponent: Inputs.TextMask as any,
                                             inputProps: {
-                                                mask: ['AAA-0000', 'AAA-0A00'],
+                                                mask: ['aaa-0000', 'aaa-0a00'],
                                                 onChange: onChange(setStore)
                                             },
                                         }

@@ -122,9 +122,7 @@ export async function PUT (request: NextRequest) {
 
     let errors: string[] = []
 
-    if (!tipo_acesso) {
-        errors.push('Tipo de acesso é obrigatório.')
-    } else if (tipo_acesso !== 1 && tipo_acesso !== 2 && tipo_acesso !== 0) {
+    if (typeof tipo_acesso === 'number' && (tipo_acesso !== 0 && tipo_acesso !== 1 && tipo_acesso !== 2)) {
         errors.push('Tipo de acesso inválido.')
     }
 

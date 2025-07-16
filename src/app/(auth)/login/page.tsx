@@ -51,6 +51,7 @@ const Page = () => {
                 label='Usuário'
                 size='small'
                 value={email}
+                focused
                 onChange={(e) => { setEmail(e.target.value); setError('') }}
               />
             </Grid>
@@ -62,6 +63,7 @@ const Page = () => {
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); setError('') }}
                 type={show ? 'text' : 'password'}
+                focused
                 slotProps={{
                   input: {
                       endAdornment: (
