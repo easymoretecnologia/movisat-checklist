@@ -35,8 +35,8 @@ export async function GET (request: NextRequest) {
         const repo = db.getRepository(Notificacao)
 
         let query = await repo.createQueryBuilder('notificacoes')
-        .andWhere('notificacoes.empresa_id = :empresa_id', { empresa_id: dbUser.id_empresa })
-        .where(qb => {
+        .where('notificacoes.empresa_id = :empresa_id', { empresa_id: dbUser.id_empresa })
+        .andWhere(qb => {
             const subQuery = qb.subQuery()
                 .select('1')
                 .from(NotificacaoLida, 'nl')
