@@ -149,6 +149,7 @@ export async function POST (request: NextRequest) {
         const repoNotificacao = db.getRepository(Notificacao)
         
         const notificacao = repoNotificacao.create({
+            empresa_id: Number(user.id_empresa),
             usuario_id: Number(user.id),
             descricao: `Checklist semanal enviado para o veículo ${veiculo.placa}!`,
             data: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),
@@ -162,6 +163,7 @@ export async function POST (request: NextRequest) {
 
         if (oleo_motor === 'nao' || agua_limpador === 'nao' || oleo_freio === 'nao' || pneus === 'nao' || escapamento === 'nao' || vidros === 'nao' || luzes === 'nao') {
             const notificacaoInconformidades = repoNotificacao.create({
+                empresa_id: Number(user.id_empresa),
                 usuario_id: Number(user.id),
                 descricao: `Checklist semanal (#${checklist.id}) com inconformidades!`,
                 data: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),

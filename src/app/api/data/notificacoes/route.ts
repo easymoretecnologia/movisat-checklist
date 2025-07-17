@@ -44,6 +44,7 @@ export async function POST (request: NextRequest) {
         }
 
         const notificacao = repo.create({
+            empresa_id: Number(user.id_empresa),
             descricao,
             data,
             usuario_id: user.id

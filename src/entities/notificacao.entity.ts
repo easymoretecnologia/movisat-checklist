@@ -6,6 +6,9 @@ export class Notificacao {
     id: number
 
     @Column({ type: 'bigint', nullable: false })
+    empresa_id: number
+
+    @Column({ type: 'bigint', nullable: false })
     usuario_id: number
     
     @Column({ type: 'longtext', nullable: true })

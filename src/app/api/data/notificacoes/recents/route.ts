@@ -39,6 +39,7 @@ export async function GET (request: NextRequest) {
         const repo = db.getRepository(Notificacao)
 
         let query = await repo.createQueryBuilder('notificacoes')
+        .where('notificacoes.empresa_id = :empresa_id', { empresa_id: dbUser.id_empresa })
         .where(qb => {
             const subQuery = qb.subQuery()
                 .select('1')
