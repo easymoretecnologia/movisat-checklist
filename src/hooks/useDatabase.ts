@@ -30,7 +30,7 @@ export default async () => {
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE ?? 'localhost',
         synchronize: true,
-        logging: true,
+        logging: false,
         entities: [
             User,
             Empresa,

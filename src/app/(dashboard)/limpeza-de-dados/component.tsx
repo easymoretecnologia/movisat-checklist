@@ -31,14 +31,17 @@ const tipos = [
 
 interface Props {
     session: Session
+    usuarios: { id: number, nome: string, empresa_id: number, empresa: string }[]
+    empresas: { id: number, nome: string }[]
+    veiculos: { id: number, apelido: string, placa: string, modelo: string, cor: string, empresa_id: number, empresa: string }[]
 }
 
-type EmpresasFilter = FilterProps<{ by: 'id', inicio: string, fim: string, tipo: 'diario' | 'semanal' | 'mensal' }>
+type EmpresasFilter = FilterProps<{ by: 'id', empresa_id: number, usuario_id: number, veiculo_id: number, inicio: string, fim: string, tipo: 'diario' | 'semanal' | 'mensal' }>
 
-export default ({ session }: Props) => {
+export default ({ session, usuarios, empresas, veiculos }: Props) => {
     const theme = useTheme()
     const mobile = useMediaQuery(theme.breakpoints.down('sm'))
-    const [filters, setFilters] = React.useState<EmpresasFilter>({ by: 'id', direction: 'asc', page: 1, limit: 10, search: '', inicio: '', fim: '', tipo: 'diario' })
+    const [filters, setFilters] = React.useState<EmpresasFilter>({ by: 'id', direction: 'asc', page: 1, limit: 10, search: '', empresa_id: 0, usuario_id: 0, veiculo_id: 0, inicio: '', fim: '', tipo: 'diario' })
 
     const { onChange, onDate } = useForm({})
     const { openDialog, closeDialog, ...customDialog } = useDialog()
@@ -98,6 +101,69 @@ export default ({ session }: Props) => {
             <Grid2 size={{ xs: 12 }}>
                 <LocalizationProvider dateAdapter={AdapterLuxon}>
                     <Grid2 container spacing={6}>
+                    <Grid2 size={{ xs: 12, sm: 4 }}>
+                            <Inputs.Select 
+                                label='Empresa'
+                                name='empresa_id'
+                                value={filters.empresa_id}
+                                multiple={false}
+                                options={[{ id: 0, nome: 'Todas' }, ...empresas]}
+                                withSearch
+                                filter={(option: Props['empresas'][0]) => `${option.nome}`}
+                                optionComponent={(option: Props['empresas'][0]) => (
+                                    <MenuItem key={`select-empresa-${option.id}`} value={Number(`${option.id}`)}>
+                                        <ListItemText primary={`${option.nome}`} />
+                                    </MenuItem>
+                                )}
+                                render={(selected: number) => empresas.find(i => Number(i.id) === Number(`${selected}`))?.nome ?? ''}
+                                onChange={(e) => setFilters(prev => ({ ...prev, empresa_id: Number(`${e.target.value}`), usuario_id: 0, veiculo_id: 0 }))}
+                                labelProps={{ sx: { '&.MuiFormLabel-filled': {fontWeight: 700} } }}
+                                size='small'
+                            />
+                        </Grid2>
+
+                        <Grid2 size={{ xs: 12, sm: 4 }}>
+                            <Inputs.Select 
+                                label='Motorista'
+                                name='usuario_id'
+                                value={filters.usuario_id}
+                                multiple={false}
+                                options={[{ id: 0, nome: 'Todos', empresa: '' }, ...(filters.empresa_id > 0 ? usuarios.filter(i => Number(i.empresa_id) === Number(filters.empresa_id)) : usuarios)]}
+                                withSearch
+                                filter={(option: Props['usuarios'][0]) => `${option.nome}`}
+                                optionComponent={(option: Props['usuarios'][0]) => (
+                                    <MenuItem key={`select-empresa-${option.id}`} value={Number(`${option.id}`)}>
+                                        <ListItemText primary={`${option.nome}`} secondary={`${option.empresa ? `${option.empresa}` : ''}`} />
+                                    </MenuItem>
+                                )}
+                                render={(selected: number) => usuarios.find(i => Number(i.id) === Number(`${selected}`))?.nome ?? ''}
+                                onChange={(e) => setFilters(prev => ({ ...prev, usuario_id: Number(`${e.target.value}`) }))}
+                                labelProps={{ sx: { '&.MuiFormLabel-filled': {fontWeight: 700} } }}
+                                size='small'
+                            />
+                        </Grid2>
+
+                        <Grid2 size={{ xs: 12, sm: 4 }}>
+                            <Inputs.Select 
+                                label='Veículo'
+                                name='veiculo_id'
+                                value={filters.veiculo_id}
+                                multiple={false}
+                                options={[{ id: 0, apelido: 'Todos', placa: '', empresa: '' }, ...(filters.empresa_id > 0 ? veiculos.filter(i => Number(i.empresa_id) === Number(filters.empresa_id)) : veiculos)]}
+                                withSearch
+                                filter={(option: Props['veiculos'][0]) => `${option.apelido}`}
+                                optionComponent={(option: Props['veiculos'][0]) => (
+                                    <MenuItem key={`select-empresa-${option.id}`} value={Number(`${option.id}`)}>
+                                        <ListItemText primary={`${option.apelido} ${option.placa ? `(${option.placa})` : ''}`} secondary={`${option.empresa}`} />
+                                    </MenuItem>
+                                )}
+                                render={(selected: number) => veiculos.find(i => Number(i.id) === Number(`${selected}`))?.apelido ?? ''}
+                                onChange={(e) => setFilters(prev => ({ ...prev, veiculo_id: Number(`${e.target.value}`) }))}
+                                labelProps={{ sx: { '&.MuiFormLabel-filled': {fontWeight: 700} } }}
+                                size='small'
+                            />
+                        </Grid2>
+
                         <Grid2 size={{ xs: 12, sm: 2 }}>
                             <Inputs.Select 
                                 label='Tipo Checklist'

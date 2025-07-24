@@ -15,8 +15,18 @@ const Page = async ({ params, searchParams }: { params: Promise<{}>, searchParam
         return <><AuthRedirect to='/login' /></>
     }
 
+    const options = await axios.get({ raw: true, url: '/api/data/checklists/admin/options', token: session.accessToken, process: false, message: false })
+
+    if (Http.failed(options.status)) {
+        if (Http.is('Unauthorized', options.status)) {
+            return <><AuthRedirect to='/login' /></>
+        }
+
+        return <><AuthRedirect to='/500' /></>
+    }
+
     return <Authorized subject="limpezas" action="manage">
-        <Component session={session} />
+        <Component session={session} {...options.data} />
     </Authorized>
 }
 

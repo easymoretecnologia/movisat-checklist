@@ -164,7 +164,7 @@ export default ({ session, empresas }: Props) => {
                                 <Tables.Text typographyProps={{ sx: {} }}>{empresas.find(empresa => empresa.id === veiculo.id_empresa)?.nome_fantasia}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{veiculo.cor}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{veiculo.modelo}</Tables.Text>
-                                <Tables.Text typographyProps={{ sx: {} }}>{veiculo.placa}</Tables.Text>
+                                <Tables.Text typographyProps={{ sx: {} }}>{veiculo.placa.replaceAll('-', '')}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{veiculo.apelido}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{veiculo.ultimo_checklist ? veiculo.ultimo_checklist : '-'}</Tables.Text>
                                 <Tables.Column>

@@ -20,6 +20,7 @@ import { Session } from "next-auth"
 import React from "react"
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+import format from '@/utils/format'
 
 interface Props {
     session: Session
@@ -155,7 +156,7 @@ export default ({ session }: Props) => {
                         {empresas.status === 'ready' && empresas.items.map(empresa => (
                             <TableRow key={`empresa-${empresa.id}`}>
                                 <Tables.Text typographyProps={{ sx: { fontWeight: 600 } }}>{empresa.id}</Tables.Text>
-                                <Tables.Text typographyProps={{ sx: {} }}>{empresa.cnpj}</Tables.Text>
+                                <Tables.Text typographyProps={{ sx: {} }}>{format.onlyNumbers(empresa.cnpj)}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{empresa.nome_fantasia}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{empresa.email}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{empresa.contato_responsavel}</Tables.Text>

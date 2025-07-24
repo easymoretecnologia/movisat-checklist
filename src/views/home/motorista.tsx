@@ -575,6 +575,104 @@ export default ({ session, veiculos: _veiculos }: Props) => {
         if (veiculo && checklist && selfieImage && diario) {
             sweetalert.loading()
 
+            let errors: string[] = []
+            
+            if (diario.farois === 'sim' && (diario.farois_images.length === 0 || diario.farois_obs.length === 0)) {
+                if (diario.farois_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para os faróis.')
+                }
+
+                if (diario.farois_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para os faróis.')
+                }
+            }
+
+            if (diario.lataria === 'sim' && (diario.lataria_images.length === 0 || diario.lataria_obs.length === 0)) {
+                if (diario.lataria_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para a lataria.')
+                }
+
+                if (diario.lataria_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para a lataria.')
+                }
+            }
+
+            if (diario.vidros === 'sim' && (diario.vidros_images.length === 0 || diario.vidros_obs.length === 0)) {
+                if (diario.vidros_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para os vidros.')
+                }
+
+                if (diario.vidros_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para os vidros.')
+                }
+            }
+
+            if (diario.hodometro === 'sim' && (diario.hodometro_images.length === 0 || diario.hodometro_obs.length === 0)) {
+                if (diario.hodometro_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para o hodômetro.')
+                }
+
+                if (diario.hodometro_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para o hodômetro.')
+                }
+            }
+
+            if (diario.combustivel === 'sim' && (diario.combustivel_images.length === 0 || diario.combustivel_obs.length === 0)) {
+                if (diario.combustivel_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para o combustível.')
+                }
+
+                if (diario.combustivel_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para o combustível.')
+                }
+            }
+
+            if (diario.agua === 'sim' && (diario.agua_images.length === 0 || diario.agua_obs.length === 0)) {
+                if (diario.agua_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para a água.')
+                }
+
+                if (diario.agua_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para a água.')
+                }
+            }
+
+            if (diario.luzes === 'sim' && (diario.luzes_images.length === 0 || diario.luzes_obs.length === 0)) {
+                if (diario.luzes_images.length === 0) {
+                    errors.push('É necessário enviar pelo menos uma imagem para as luzes.')
+                }
+
+                if (diario.luzes_obs.length === 0) {
+                    errors.push('É necessário preencher o campo de observação para as luzes.')
+                }
+            }
+
+            if (errors.length > 0) {
+                sweetalert.close()
+                openDialog({
+                    open: true,
+                    maxWidth: 'sm',
+                    fullScreen: mobile,
+                    title: 'Erros encontrados',
+                    content: (
+                        <React.Fragment>
+                            {errors.map(error => (
+                                <Typography key={`error-${error}`} sx={{ color: theme => theme.palette.error.main, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2, textAlign: 'center' }}>
+                                    {error}
+                                </Typography>
+                            ))}
+                        </React.Fragment>
+                    ),
+                    onClose: () => {
+                        closeDialog()
+                    },
+                    hasAction: false,
+                    cancelTitle: 'Fechar',
+                    cancelColor: 'primary',
+                })
+                return;
+            }
+
             axios.post({ raw: true, url: '/api/data/motorista/checklist/diario', data: { id_veiculo: veiculo.id, id_usuario: session.user.id, tipo: checklist, ...diario }, token: session.accessToken })
             .then(res => {
                 toast.success({
@@ -598,6 +696,90 @@ export default ({ session, veiculos: _veiculos }: Props) => {
         if (veiculo && checklist && selfieImage && semanal) {
             sweetalert.loading()
 
+            let errors: string[] = []
+
+            if (semanal.oleo_motor === 'nao' && semanal.oleo_motor_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para o óleo do motor.')
+            }
+
+            if (semanal.oleo_motor === 'nao' && semanal.oleo_motor_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para o óleo do motor.')
+            }
+
+            if (semanal.agua_limpador === 'nao' && semanal.agua_limpador_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para a água do limpador.')
+            }
+
+            if (semanal.agua_limpador === 'nao' && semanal.agua_limpador_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para a água do limpador.')
+            }
+
+            if (semanal.oleo_freio === 'nao' && semanal.oleo_freio_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para o óleo do freio.')
+            }
+
+            if (semanal.oleo_freio === 'nao' && semanal.oleo_freio_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para o óleo do freio.')
+            }
+
+            if (semanal.pneus === 'nao' && semanal.pneus_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para os pneus.')
+            }
+
+            if (semanal.pneus === 'nao' && semanal.pneus_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para os pneus.')
+            }
+
+            if (semanal.escapamento === 'nao' && semanal.escapamento_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para o escapamento.')
+            }
+
+            if (semanal.escapamento === 'nao' && semanal.escapamento_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para o escapamento.')
+            }
+
+            if (semanal.vidros === 'nao' && semanal.vidros_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para os vidros.')
+            }
+
+            if (semanal.vidros === 'nao' && semanal.vidros_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para os vidros.')
+            }
+
+            if (semanal.luzes === 'nao' && semanal.luzes_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para as luzes.')
+            }
+
+            if (semanal.luzes === 'nao' && semanal.luzes_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para as luzes.')
+            }
+
+            if (errors.length > 0) {
+                sweetalert.close()
+                openDialog({
+                    open: true,
+                    maxWidth: 'sm',
+                    fullScreen: mobile,
+                    title: 'Erros encontrados',
+                    content: (
+                        <React.Fragment>
+                            {errors.map(error => (
+                                <Typography key={`error-${error}`} sx={{ color: theme => theme.palette.error.main, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2, textAlign: 'center' }}>
+                                    {error}
+                                </Typography>
+                            ))}
+                        </React.Fragment>
+                    ),
+                    onClose: () => {
+                        closeDialog()
+                    },
+                    hasAction: false,
+                    cancelTitle: 'Fechar',
+                    cancelColor: 'primary',
+                })
+                return;
+            }
+
             axios.post({ raw: true, url: '/api/data/motorista/checklist/semanal', data: { id_veiculo: veiculo.id, id_usuario: session.user.id, tipo: checklist, ...semanal }, token: session.accessToken })
             .then(res => {
                 toast.success({
@@ -620,6 +802,98 @@ export default ({ session, veiculos: _veiculos }: Props) => {
     const onSaveChecklistMensal = () => {
         if (veiculo && checklist && selfieImage && mensal) {
             sweetalert.loading()
+
+            let errors: string[] = []
+
+            if (mensal.bateria === 'nao' && mensal.bateria_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para a bateria.')
+            }
+
+            if (mensal.bateria === 'nao' && mensal.bateria_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para a bateria.')
+            }
+
+            if (mensal.farois === 'nao' && mensal.farois_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para os faróis.')
+            }
+
+            if (mensal.farois === 'nao' && mensal.farois_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para os faróis.')
+            }
+
+            if (mensal.estofados === 'nao' && mensal.estofados_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para os estofados.')
+            }
+
+            if (mensal.estofados === 'nao' && mensal.estofados_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para os estofados.')
+            }
+
+            if (mensal.documentacao === 'nao' && mensal.documentacao_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para a documentação.')
+            }
+
+            if (mensal.documentacao === 'nao' && mensal.documentacao_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para a documentação.')
+            }
+
+            if (mensal.volante === 'nao' && mensal.volante_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para o volante.')
+            }
+
+            if (mensal.volante === 'nao' && mensal.volante_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para o volante.')
+            }
+
+            if (mensal.cambio === 'nao' && mensal.cambio_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para o câmbio.')
+            }
+
+            if (mensal.cambio === 'nao' && mensal.cambio_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para o câmbio.')
+            }
+
+            if (mensal.higiene_interna === 'nao' && mensal.higiene_interna_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para a higiene interna.')
+            }
+
+            if (mensal.higiene_interna === 'nao' && mensal.higiene_interna_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para a higiene interna.')
+            }
+
+            if (mensal.porta_malas === 'nao' && mensal.porta_malas_images.length === 0) {
+                errors.push('É necessário enviar pelo menos uma imagem para a porta malas.')
+            }
+
+            if (mensal.porta_malas === 'nao' && mensal.porta_malas_obs.length === 0) {
+                errors.push('É necessário preencher o campo de observação para a porta malas.')
+            }
+
+            if (errors.length > 0) {
+                sweetalert.close()
+                openDialog({
+                    open: true,
+                    maxWidth: 'sm',
+                    fullScreen: mobile,
+                    title: 'Erros encontrados',
+                    content: (
+                        <React.Fragment>
+                            {errors.map(error => (
+                                <Typography key={`error-${error}`} sx={{ color: theme => theme.palette.error.main, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2, textAlign: 'center' }}>
+                                    {error}
+                                </Typography>
+                            ))}
+                        </React.Fragment>
+                    ),
+                    onClose: () => {
+                        closeDialog()
+                    },
+                    hasAction: false,
+                    cancelTitle: 'Fechar',
+                    cancelColor: 'primary',
+                })
+                return;
+            }
 
             axios.post({ raw: true, url: '/api/data/motorista/checklist/mensal', data: { id_veiculo: veiculo.id, id_usuario: session.user.id, tipo: checklist, ...mensal }, token: session.accessToken })
             .then(res => {
@@ -664,10 +938,13 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                 <Card sx={{ cursor: 'pointer' }} onClick={onAction(veiculo)}>
                                     <CardContent sx={{ px: 3, py: '.75rem !important' }}>
                                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
-                                            <strong>Placa:</strong> {veiculo.placa}
+                                            <strong>Placa:</strong> {veiculo.placa.replaceAll('-', '')}
                                         </Typography>
                                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
                                             <strong>Último checklist:</strong> {veiculo.ultimo_checklist ? DateTime.fromSQL(veiculo.ultimo_checklist).toFormat('dd/MM/yyyy HH:mm'): 'N/A'}
+                                        </Typography>
+                                        <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
+                                            <strong>Último checklist:</strong> {veiculo.ultimo_checklist}
                                         </Typography>
 
                                         {veiculo.status === 'Andamento' && Number(veiculo.id_usuario) === Number(session.user.id) && (
@@ -787,7 +1064,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     Os faróis estão danificados?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.farois, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('farois', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.farois, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('farois', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.farois, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -797,7 +1074,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.farois, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('farois', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.farois, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('farois', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.farois, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -828,7 +1105,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     A lataria possui amassados expressivos?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.lataria, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('lataria', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.lataria, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('lataria', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.lataria, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -838,7 +1115,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.lataria, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('lataria', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.lataria, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('lataria', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.lataria, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -869,7 +1146,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     O prabrisas e os retrovisores estão danificados?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.vidros, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('vidros', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.vidros, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('vidros', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.vidros, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -879,7 +1156,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.vidros, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('vidros', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.vidros, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('vidros', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.vidros, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -910,7 +1187,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     O hodômetro está danificado?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.hodometro, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('hodometro', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.hodometro, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('hodometro', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.hodometro, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -920,7 +1197,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.hodometro, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('hodometro', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.hodometro, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('hodometro', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.hodometro, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -951,7 +1228,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     Está sem combustível no veículo?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.combustivel, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('combustivel', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.combustivel, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('combustivel', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.combustivel, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -961,7 +1238,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.combustivel, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('combustivel', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.combustivel, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('combustivel', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.combustivel, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -992,7 +1269,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     Está sem água no radiador?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.agua, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('agua', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.agua, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('agua', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.agua, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -1002,7 +1279,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.agua, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('agua', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.agua, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('agua', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.agua, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>
@@ -1033,7 +1310,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                     Existem luzes acesas no painel do veículo antes do serviço?
                                 </Typography>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 3 }}>
-                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.luzes, 'nao', palette.error['600']) }} onClick={() => onChangeDiario('luzes', 'nao')}>
+                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.luzes, 'nao', palette.success['500']) }} onClick={() => onChangeDiario('luzes', 'nao')}>
                                         <Typography sx={{ color: isColor(diario.luzes, 'nao', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             NÃO
                                         </Typography>
@@ -1043,7 +1320,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                             N/A
                                         </Typography>
                                     </Button>
-                                    <Button color='success' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.luzes, 'sim', palette.success['500']) }} onClick={() => onChangeDiario('luzes', 'sim')}>
+                                    <Button color='error' variant="contained" sx={{ ...btnStx, bgcolor: isBg(diario.luzes, 'sim', palette.error['600']) }} onClick={() => onChangeDiario('luzes', 'sim')}>
                                         <Typography sx={{ color: isColor(diario.luzes, 'sim', 'white'), fontWeight: 700, fontSize: '1rem' }}>
                                             SIM
                                         </Typography>

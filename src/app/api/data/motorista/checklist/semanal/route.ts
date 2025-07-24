@@ -136,15 +136,15 @@ export async function POST (request: NextRequest) {
             luzes_images: luzesImagePaths,
             status: motivo === 'uso' ? 'Uso' : 'Devolução',
             selfie_motorista: selfie_motorista,
-            ultimo_checklist: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),
+            ultimo_checklist: DateTime.now().setZone('America/Sao_Paulo').toFormat('yyyy-MM-dd HH:mm:ss'),
             ciencia_inconformidades: null,
             created_at: inicio,
-            updated_at: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),
+            updated_at: DateTime.now().setZone('America/Sao_Paulo').toFormat('yyyy-MM-dd HH:mm:ss'),
         })
 
         await repo.save(checklist)
 
-        await repoVeiculo.update({ id: Number(id_veiculo)}, { status: null, id_usuario: null, tipo_checklist: null, ultimo_checklist: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss') })
+        await repoVeiculo.update({ id: Number(id_veiculo)}, { status: null, id_usuario: null, tipo_checklist: null, ultimo_checklist: DateTime.now().setZone('America/Sao_Paulo').toFormat('yyyy-MM-dd HH:mm:ss') })
 
         const repoNotificacao = db.getRepository(Notificacao)
         
@@ -152,7 +152,7 @@ export async function POST (request: NextRequest) {
             empresa_id: Number(user.id_empresa),
             usuario_id: Number(user.id),
             descricao: `Checklist semanal enviado para o veículo ${veiculo.placa}!`,
-            data: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),
+            data: DateTime.now().setZone('America/Sao_Paulo').toFormat('yyyy-MM-dd HH:mm:ss'),
             json: {
                 id_veiculo: Number(id_veiculo),
                 veiculo: veiculo,
@@ -166,7 +166,7 @@ export async function POST (request: NextRequest) {
                 empresa_id: Number(user.id_empresa),
                 usuario_id: Number(user.id),
                 descricao: `Checklist semanal (#${checklist.id}) com inconformidades!`,
-                data: DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss'),
+                data: DateTime.now().setZone('America/Sao_Paulo').toFormat('yyyy-MM-dd HH:mm:ss'),
                 json: {
                     id_veiculo: Number(id_veiculo),
                     veiculo: veiculo,
