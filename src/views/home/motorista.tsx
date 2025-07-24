@@ -943,9 +943,6 @@ export default ({ session, veiculos: _veiculos }: Props) => {
                                         <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
                                             <strong>Último checklist:</strong> {veiculo.ultimo_checklist ? DateTime.fromSQL(veiculo.ultimo_checklist).toFormat('dd/MM/yyyy HH:mm'): 'N/A'}
                                         </Typography>
-                                        <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
-                                            <strong>Último checklist:</strong> {veiculo.ultimo_checklist}
-                                        </Typography>
 
                                         {veiculo.status === 'Andamento' && Number(veiculo.id_usuario) === Number(session.user.id) && (
                                             <Button color='primary' variant='contained' size='small' sx={{ width: '100%', color: 'white' }}>
