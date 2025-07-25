@@ -63,7 +63,7 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                 onAction: () => {
                     sweetalert.loading()
 
-                    axios.delete({ raw: true, url: '/api/data/checklists/admin/delete', data: filters, token: session.accessToken, process: true, message: false })
+                    axios.get({ raw: true, url: '/api/data/checklists/admin/delete', data: filters, token: session.accessToken, process: true, message: false })
                     .then(res => {
                         sweetalert.close()
                         closeDialog()
