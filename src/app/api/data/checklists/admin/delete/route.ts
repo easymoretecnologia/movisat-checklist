@@ -9,6 +9,7 @@ import { DateTime } from "luxon"
 import { NextRequest, NextResponse } from "next/server"
 import * as ExcelJS from "exceljs"
 import { stringify } from "csv"
+import { In } from "typeorm"
 
 // Helper function to delete images from checklist records
 async function deleteChecklistImages(checklists: (ChecklistDiario | ChecklistMensal | ChecklistSemanal)[]): Promise<void> {
@@ -102,7 +103,9 @@ export async function GET (request: NextRequest) {
             await deleteChecklistImages(recordsToDelete)
 
             // Now delete the records from database
-            await queryDiario.delete()
+            await repoDiario.delete({
+                id: In(recordsToDelete.map(record => record.id))
+            })
 
             await db.destroy()
 
@@ -146,7 +149,9 @@ export async function GET (request: NextRequest) {
             await deleteChecklistImages(recordsToDelete)
 
             // Now delete the records from database
-            await queryMensal.delete()
+            await repoMensal.delete({
+                id: In(recordsToDelete.map(record => record.id))
+            })
 
             await db.destroy()
 
@@ -190,7 +195,9 @@ export async function GET (request: NextRequest) {
             await deleteChecklistImages(recordsToDelete)
 
             // Now delete the records from database
-            await querySemanal.delete()
+            await repoSemanal.delete({
+                id: In(recordsToDelete.map(record => record.id))
+            })
 
             await db.destroy()
 
