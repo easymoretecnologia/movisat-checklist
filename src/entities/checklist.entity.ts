@@ -89,10 +89,10 @@ export class ChecklistDiario {
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string | null
 
-    @CreateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     created_at: string
 
-    @UpdateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     updated_at: string
 }
 
@@ -194,10 +194,10 @@ export class ChecklistMensal {
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string
 
-    @CreateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     created_at: string
 
-    @UpdateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     updated_at: string
 }
 
@@ -290,9 +290,9 @@ export class ChecklistSemanal {
     @Column({ type: 'timestamp', nullable: true })
     ultimo_checklist: string
 
-    @CreateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     created_at: string
 
-    @UpdateDateColumn()
+    @Column({ type: 'timestamp', nullable: true })
     updated_at: string
 }
