@@ -481,7 +481,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
 
         try {
             const base64Files = await Promise.all(_files.map(file => convertFileToBase64(file)));
-            setDiario(prev => ({ ...prev, [key]: [...prev[key], ...base64Files] }));
+            setDiario(prev => ({ ...prev, [key]: [...base64Files] }));
         } catch (error) {
             toast.error({
                 html: <Typography>
@@ -521,7 +521,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
 
         try {
             const base64Files = await Promise.all(_files.map(file => convertFileToBase64(file)));
-            setSemanal(prev => ({ ...prev, [key]: [...prev[key], ...base64Files] }));
+            setSemanal(prev => ({ ...prev, [key]: [...base64Files] }));
         } catch (error) {
             toast.error({
                 html: <Typography>
@@ -561,7 +561,7 @@ export default ({ session, veiculos: _veiculos }: Props) => {
 
         try {
             const base64Files = await Promise.all(_files.map(file => convertFileToBase64(file)));
-            setMensal(prev => ({ ...prev, [key]: [...prev[key], ...base64Files] }));
+            setMensal(prev => ({ ...prev, [key]: [...base64Files] }));
         } catch (error) {
             toast.error({
                 html: <Typography>
