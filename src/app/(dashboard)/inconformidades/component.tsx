@@ -77,7 +77,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                                                 <strong>Placa:</strong> {diario.veiculo.placa}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
-                                                <strong>Último checklist:</strong> {diario.ultimo_checklist ? DateTime.fromISO(diario.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
+                                                <strong>Último checklist:</strong> {diario.ultimo_checklist ? DateTime.fromSQL(diario.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
                                                 <strong>Inconformidades:</strong> {diario.inconformidades}
@@ -103,7 +103,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                             {filteredDiarios.map(diario => (
                                 <TableRow key={diario.id}>
                                     <Tables.Text>{diario.veiculo.placa}</Tables.Text>
-                                    <Tables.Text>{diario.ultimo_checklist ? DateTime.fromISO(diario.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
+                                    <Tables.Text>{diario.ultimo_checklist ? DateTime.fromSQL(diario.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
                                     <Tables.Text>{diario.inconformidades}</Tables.Text>
                                     <Tables.Text>{diario.dias_sem_checklist} dias</Tables.Text>
                                     <Tables.Text>{diario.ciencia_inconformidades ? 'Sim' : 'Não'}</Tables.Text>
@@ -127,7 +127,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                                                 <strong>Placa:</strong> {mensal.veiculo.placa}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
-                                                <strong>Último checklist:</strong> {mensal.ultimo_checklist ? DateTime.fromISO(mensal.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
+                                                <strong>Último checklist:</strong> {mensal.ultimo_checklist ? DateTime.fromSQL(mensal.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
                                                 <strong>Inconformidades:</strong> {mensal.inconformidades}
@@ -153,7 +153,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                             {filteredMensais.map(mensal => (
                                 <TableRow key={mensal.id}>
                                     <Tables.Text>{mensal.veiculo.placa}</Tables.Text>
-                                    <Tables.Text>{mensal.ultimo_checklist ? DateTime.fromISO(mensal.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
+                                    <Tables.Text>{mensal.ultimo_checklist ? DateTime.fromSQL(mensal.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
                                     <Tables.Text>{mensal.inconformidades}</Tables.Text>
                                     <Tables.Text>{mensal.dias_sem_checklist} dias</Tables.Text>
                                     <Tables.Text>{mensal.ciencia_inconformidades ? 'Sim' : 'Não'}</Tables.Text>
@@ -177,7 +177,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                                                 <strong>Placa:</strong> {semana.veiculo.placa}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
-                                                <strong>Último checklist:</strong> {semana.ultimo_checklist ? DateTime.fromISO(semana.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
+                                                <strong>Último checklist:</strong> {semana.ultimo_checklist ? DateTime.fromSQL(semana.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}
                                             </Typography>
                                             <Typography sx={{ color: theme => theme.palette.text.secondary, fontWeight: 500, fontSize: '.9rem', fontFamily: 'Arial', letterSpacing: 2, mb: 2 }}>
                                                 <strong>Inconformidades:</strong> {semana.inconformidades}
@@ -203,7 +203,7 @@ export default ({ session, diarios, mensais, semanais }: Props) => {
                             {filteredSemanais.map(semana => (
                                 <TableRow key={semana.id}>
                                     <Tables.Text>{semana.veiculo.placa}</Tables.Text>
-                                    <Tables.Text>{semana.ultimo_checklist ? DateTime.fromISO(semana.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
+                                    <Tables.Text>{semana.ultimo_checklist ? DateTime.fromSQL(semana.ultimo_checklist).toFormat('dd/MM/yyyy'): 'N/A'}</Tables.Text>
                                     <Tables.Text>{semana.inconformidades}</Tables.Text>
                                     <Tables.Text>{semana.dias_sem_checklist} dias</Tables.Text>
                                     <Tables.Text>{semana.ciencia_inconformidades ? 'Sim' : 'Não'}</Tables.Text>

@@ -465,7 +465,7 @@ export default ({ session, usuarios, empresas, veiculos }: Props) => {
                                 <Tables.Text typographyProps={{ sx: {} }}>{checklist.empresa.nome}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{checklist.usuario.nome}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{checklist.veiculo.apelido} ({checklist.veiculo.placa})</Tables.Text>
-                                <Tables.Text typographyProps={{ sx: {} }}>{DateTime.fromISO(checklist.created_at).toFormat('dd/MM/yyyy HH:mm')}</Tables.Text>
+                                <Tables.Text typographyProps={{ sx: {} }}>{DateTime.fromSQL(checklist.created_at).toFormat('dd/MM/yyyy HH:mm')}</Tables.Text>
                                 <Tables.Text typographyProps={{ sx: {} }}>{hasInconformidades(checklist) ? 'Sim' : 'Não'}</Tables.Text>
                                 <Tables.Column>
                                     {hasInconformidades(checklist) && (
