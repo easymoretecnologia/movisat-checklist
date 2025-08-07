@@ -25,7 +25,7 @@ export async function GET (request: NextRequest) {
 
         const [veiculos, total] = await query.skip((Number(querySearch.get('page') || 1) - 1) * Number(querySearch.get('limit') || 20)).take(Number(querySearch.get('limit') || 20)).getManyAndCount()
 
-        await db.destroy()
+        
 
         return NextResponse.json({
             items: veiculos.map(veiculo => ({

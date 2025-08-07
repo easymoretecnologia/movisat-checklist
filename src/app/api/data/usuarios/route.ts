@@ -35,7 +35,7 @@ export async function POST (request: NextRequest) {
             const db = await useDatabase()
             const repo = db.getRepository(User)
             const usuario = await repo.findOneBy({ email: email })
-            await db.destroy()
+            
 
             if (usuario) {
                 errors.push('Email já cadastrado.')
@@ -64,7 +64,7 @@ export async function POST (request: NextRequest) {
 
             const empresa = await db.getRepository(Empresa).findOneBy({ id: id_empresa })
 
-            await db.destroy()
+            
 
             if (!empresa) {
                 errors.push('Empresa não encontrada.')
@@ -139,7 +139,7 @@ export async function PUT (request: NextRequest) {
             const db = await useDatabase()
             const repo = db.getRepository(User)
             const usuario = await repo.findOneBy({ email: email, id: Not(id) })
-            await db.destroy()
+            
 
             if (usuario) {
                 errors.push('Email já cadastrado.')
@@ -168,7 +168,7 @@ export async function PUT (request: NextRequest) {
 
             const empresa = await db.getRepository(Empresa).findOneBy({ id: id_empresa })
 
-            await db.destroy()
+            
 
             if (!empresa) {
                 errors.push('Empresa não encontrada.')
@@ -201,7 +201,7 @@ export async function PUT (request: NextRequest) {
             await repo.update({ id: usuario.id }, { nome, email, cpf: format.onlyNumbers(cpf), telefone, tipo_acesso, id_empresa })
         }
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Usuário atualizado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

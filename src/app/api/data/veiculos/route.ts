@@ -44,7 +44,7 @@ export async function POST (request: NextRequest) {
 
             const empresa = await db.getRepository(Empresa).findOneBy({ id: id_empresa })
 
-            await db.destroy()
+            
 
             if (!empresa) {
                 errors.push('Empresa não encontrada.')
@@ -120,7 +120,7 @@ export async function PUT (request: NextRequest) {
 
             const empresa = await db.getRepository(Empresa).findOneBy({ id: id_empresa })
 
-            await db.destroy()
+            
 
             if (!empresa) {
                 errors.push('Empresa não encontrada.')
@@ -147,7 +147,7 @@ export async function PUT (request: NextRequest) {
 
         await repo.update({ id: veiculo.id }, { cor, modelo, placa, apelido, id_empresa })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Veículo atualizado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

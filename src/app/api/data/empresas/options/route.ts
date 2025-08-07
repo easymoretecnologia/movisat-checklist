@@ -26,7 +26,7 @@ export async function GET (request: NextRequest) {
 
         const empresas = await query.getMany()
 
-        await db.destroy()
+        
 
         return NextResponse.json({
             options: empresas.map(empresa => ({

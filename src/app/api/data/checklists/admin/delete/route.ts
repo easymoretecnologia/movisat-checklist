@@ -107,7 +107,7 @@ export async function GET (request: NextRequest) {
                 id: In(recordsToDelete.map(record => record.id))
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 message: 'Dados limpos com sucesso.'
@@ -153,7 +153,7 @@ export async function GET (request: NextRequest) {
                 id: In(recordsToDelete.map(record => record.id))
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 message: 'Dados limpos com sucesso.'
@@ -199,7 +199,7 @@ export async function GET (request: NextRequest) {
                 id: In(recordsToDelete.map(record => record.id))
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 message: 'Dados limpos com sucesso.'

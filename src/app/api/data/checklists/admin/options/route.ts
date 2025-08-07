@@ -22,7 +22,7 @@ export async function GET (request: NextRequest) {
         const queryempresas = await repoEmpresa.find({ })
         const queryveiculos = await repoVeiculo.find({ })
 
-        await db.destroy()
+        
 
         const users = queryusers.map(user => ({
             id: Number(user.id),

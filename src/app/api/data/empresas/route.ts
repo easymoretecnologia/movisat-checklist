@@ -52,7 +52,7 @@ export async function POST (request: NextRequest) {
 
         await repo.save(empresa)
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Empresa cadastrada com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {
@@ -111,7 +111,7 @@ export async function PUT (request: NextRequest) {
 
         await repo.update({ id: empresa.id }, { nome_fantasia, email, cnpj: format.onlyNumbers(cnpj), contato_responsavel })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Empresa atualizada com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {
@@ -146,7 +146,7 @@ export async function DELETE (request: NextRequest) {
 
         await repo.delete({ id: empresa.id })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Empresa deletada com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

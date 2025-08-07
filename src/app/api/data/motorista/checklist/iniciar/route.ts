@@ -55,7 +55,7 @@ export async function POST (request: NextRequest) {
 
         await repoVeiculo.update({ id: id_veiculo}, { status: 'Andamento', id_usuario: user.id, tipo_checklist: tipo })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Checklist iniciado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

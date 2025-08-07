@@ -177,7 +177,7 @@ export async function POST (request: NextRequest) {
             await repoNotificacao.save(notificacaoInconformidades)
         }
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Checklist enviado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

@@ -53,7 +53,7 @@ export async function POST (request: NextRequest) {
 
         await repo.save(lembrete)
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Lembrete cadastrado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {
@@ -112,7 +112,7 @@ export async function PUT (request: NextRequest) {
 
         await repo.update({ id: lembrete.id }, { mensagem, data, usuario_id: user.id })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Lembrete atualizado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {
@@ -157,7 +157,7 @@ export async function DELETE (request: NextRequest) {
 
         await repo.delete({ id: lembrete.id, usuario_id: user.id })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Lembrete deletado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

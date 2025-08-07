@@ -53,7 +53,7 @@ export async function GET (request: NextRequest) {
 
         const notificacoes = await query.limit(5).getMany()
 
-        await db.destroy()
+        
 
         return NextResponse.json({
             notificacoes: notificacoes.map(notificacao => ({

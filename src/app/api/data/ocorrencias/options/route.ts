@@ -42,7 +42,7 @@ export async function GET (request: NextRequest) {
         const queryusers = await repoUser.find({ where: { tipo_acesso: 2, id_empresa: Number(auth.id_empresa) } })
         const queryveiculos = await repoVeiculo.find({ where: { id_empresa: Number(auth.id_empresa) } })
 
-        await db.destroy()
+        
 
         const users = queryusers.map(user => ({
             id: Number(user.id),

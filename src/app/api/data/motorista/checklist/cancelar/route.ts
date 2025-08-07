@@ -49,7 +49,7 @@ export async function POST (request: NextRequest) {
 
         await repoVeiculo.update({ id: id_veiculo}, { status: null, id_usuario: null, tipo_checklist: null })
 
-        await db.destroy()
+        
 
         return NextResponse.json({ message: 'Checklist cancelado com sucesso.' }, { status: 200, statusText: 'OK' })
     } catch (error) {

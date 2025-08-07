@@ -46,7 +46,7 @@ export async function GET (request: NextRequest) {
 
         const lembretes = await query.getMany()
 
-        await db.destroy()
+        
         return NextResponse.json({
             lembretes: lembretes.map(lembrete => ({
                 id: Number(lembrete.id),

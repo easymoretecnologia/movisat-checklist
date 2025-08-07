@@ -103,7 +103,7 @@ export async function GET (request: NextRequest) {
                 })
             }
 
-            await db.destroy()
+            
 
             // If there are items, generate CSV
             if (items.length > 0) {
@@ -199,7 +199,7 @@ export async function GET (request: NextRequest) {
                 })
             }
 
-            await db.destroy()
+            
 
             // If there are items, generate CSV
             if (items.length > 0) {
@@ -294,7 +294,7 @@ export async function GET (request: NextRequest) {
                 })
             }
 
-            await db.destroy()
+            
 
             // If there are items, generate CSV
             if (items.length > 0) {

@@ -128,7 +128,7 @@ export async function GET (request: NextRequest) {
                 }
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 items: items,
@@ -234,7 +234,7 @@ export async function GET (request: NextRequest) {
                 }
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 items: items,
@@ -340,7 +340,7 @@ export async function GET (request: NextRequest) {
                 }
             })
 
-            await db.destroy()
+            
 
             return NextResponse.json({
                 items: items,

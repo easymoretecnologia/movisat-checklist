@@ -25,7 +25,7 @@ export async function GET (request: NextRequest) {
 
         const veiculos = await query.getMany()
 
-        await db.destroy()
+        
 
         return NextResponse.json({
             options: veiculos.map(veiculo => ({
