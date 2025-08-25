@@ -9,7 +9,6 @@ type SortIconProps = Omit<IconProps, "icon"> & {
 	direction: FilterProps["direction"];
 };
 const StyledIcon = styled(Icon)<IconProps>(({ theme }) => ({
-	marginLeft: ".25rem",
 	cursor: "pointer",
 	color: 'white',
 }));
@@ -65,15 +64,15 @@ export default function Title({
 				<Box sx={{ display: 'flex', justifyContent: align, alignItems: 'center' }}>
 					<Typography fontSize={".9rem"} fontWeight={700} sx={{ textTransform: "none", position: 'relative', width: 'fit-content' }} {...props.typographyProps}>
 						{props.title}
-
-						<IconButton
-							size='small'
-							onClick={onClick}
-							sx={{ position: "absolute", right: -50, top: 0, bottom: 0, ":hover": { background: "transparent" } }}
-						>
-							<SortIcon sorted={name === filters.by} direction={filters.direction} {...props.iconProps} />
-						</IconButton>
 					</Typography>
+					<IconButton
+						size='small'
+						onClick={onClick}
+						/* sx={{ position: "absolute", right: -50, top: 0, bottom: 0, ":hover": { background: "transparent" } }} */
+						sx={{ marginLeft: ".25rem" }}
+					>
+						<SortIcon sorted={name === filters.by} direction={filters.direction} {...props.iconProps} />
+					</IconButton>
 				</Box>
 			)}
 		</TableCell>
